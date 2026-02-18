@@ -45,7 +45,7 @@ export function AppSidebar({ logoHref, navItems, ...props }: AppSidebarProps) {
   };
 
   useEffect(() => {
-    if (user?.signatureInfo.status === 'TEST_PERIOD_ACTIVE') {
+    if (user?.signatureInfo?.status === 'TEST_PERIOD_ACTIVE') {
       const expirationDate = new Date(user.signatureInfo.lastExpirationDate);
       const now = new Date();
 
@@ -56,7 +56,7 @@ export function AppSidebar({ logoHref, navItems, ...props }: AppSidebarProps) {
         setCanClosePlansModal(false);
       }
     }
-  }, [user?.signatureInfo.lastExpirationDate, user?.signatureInfo.status]);
+  }, [user?.signatureInfo?.lastExpirationDate, user?.signatureInfo?.status]);
 
   return (
     <>
@@ -107,7 +107,7 @@ export function AppSidebar({ logoHref, navItems, ...props }: AppSidebarProps) {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        {user?.signatureInfo.status === 'TEST_PERIOD_ACTIVE' && (
+        {user?.signatureInfo?.status === 'TEST_PERIOD_ACTIVE' && (
           <SidebarFooter>
             <Card className="gap-2 py-4 shadow-none">
               <CardHeader className="px-4">
