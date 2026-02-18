@@ -1,6 +1,6 @@
 'use client';
 import React, { ComponentType } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 
 import { hasFeature } from '@/shared/lib/permissions';
 import { useAuth } from '@/shared/hooks/use-auth';

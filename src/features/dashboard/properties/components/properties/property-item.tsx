@@ -15,8 +15,8 @@ import {
   FileImage,
   Clock,
 } from 'lucide-react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Image from '@/shims/next-image';
+import { useRouter } from '@/shims/next-navigation';
 
 import { PropertyDetail } from '@/shared/types';
 

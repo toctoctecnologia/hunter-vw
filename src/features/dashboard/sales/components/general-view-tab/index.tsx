@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Phone, MessageCircle, Calendar, Edit, UserPlus } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { toast } from 'sonner';
 
 import { formatLongDateHour, leadFunnelStepToLabel, LeadOriginTypeToLabel } from '@/shared/lib/utils';

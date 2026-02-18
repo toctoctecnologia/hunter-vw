@@ -3,7 +3,7 @@
 import { Eye, EyeOff, Lock, Mail, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 

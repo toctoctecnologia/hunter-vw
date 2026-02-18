@@ -3,7 +3,7 @@
 import { CheckCircle2, Circle, Clock, Pencil, Trash2, Tag, User } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { format, parseISO } from 'date-fns';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { ptBR } from 'date-fns/locale';
 
 import { Task } from '@/features/dashboard/calendar/types';

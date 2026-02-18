@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { Eye } from 'lucide-react';
 import { format } from 'date-fns';
 

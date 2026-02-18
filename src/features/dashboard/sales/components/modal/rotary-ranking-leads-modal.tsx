@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { Eye, Phone, Tag, MapPin } from 'lucide-react';
 
 import { leadFunnelStepToLabel, LeadOriginTypeToLabel } from '@/shared/lib/utils';

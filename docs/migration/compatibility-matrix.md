@@ -71,6 +71,14 @@ Este inventário cobre:
 - Middleware de autenticação/redirect por request: `src/shared/lib/supabase/middleware.ts`
 - Interceptação global estilo `middleware.ts` do Next: **ausente no root**, demandando alternativa no backend/gateway.
 
+
+## Atualização da onda inicial (módulos sem dependência de runtime Next)
+
+- Foram priorizados componentes client-side fora de handlers server (`route.ts`) e fora de APIs de `next/server`/`next/headers`.
+- Em módulos de interface, imports diretos de `next/navigation` e `next/image` foram trocados para wrappers locais (`@/shims/next-navigation` e `@/shims/next-image`) para reduzir o acoplamento ao namespace `next/*`.
+- Casos com `next/link` foram convertidos para `Link` de `react-router-dom`.
+- A validação de estilos e assets estáticos foi formalizada no checklist `docs/migration/component-compatibility-checklist.md`, incluindo critérios para recursos em `public/` no contexto do Vite.
+
 ## Notas práticas para a migração
 
 1. **Curto prazo (baixo risco):** manter aliases/shims para continuidade do desenvolvimento em Vite.

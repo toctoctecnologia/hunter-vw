@@ -1,7 +1,7 @@
 'use client';
 import { forwardRef, useEffect, useState } from 'react';
 import { Clock, Thermometer } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 
 import {
   cn,

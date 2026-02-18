@@ -2,7 +2,7 @@
 import React from 'react';
 import { Edit3, Trash2 } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { toast } from 'sonner';
 
 import { CondominiumDetail } from '@/shared/types';
