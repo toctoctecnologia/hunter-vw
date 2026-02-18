@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import { LoadingFull } from '@/shared/components/loading-full';
+import { ErrorBoundary } from '@/shared/components/error-boundary';
 import { NavigationGuard } from '@/shared/components/navigation-guard';
 import { DashboardLayout } from '@/shared/components/layout/dashboard-layout';
 import { SadmDashboardLayout } from '@/shared/components/layout/sadm-dashboard-layout';
@@ -74,77 +75,79 @@ function SuspenseWrapper({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <SuspenseWrapper>
-      <NavigationGuard>
-        <Routes>
-        {/* Auth routes */}
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/auth/register" element={<RegisterPage />} />
-        <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/auth/finish-register" element={<FinishRegisterPage />} />
-        <Route path="/auth/error" element={<ErrorPage />} />
-        <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/auth/confirm-informations" element={<ConfirmInformationsPage />} />
-        <Route path="/auth/sign-up-success" element={<SignUpSuccessPage />} />
-        <Route path="/auth/mobile/confirm" element={<MobileConfirmPage />} />
-        <Route path="/auth/mobile/success" element={<MobileSuccessPage />} />
+    <ErrorBoundary>
+      <SuspenseWrapper>
+        <NavigationGuard>
+          <Routes>
+          {/* Auth routes */}
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegisterPage />} />
+          <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/auth/finish-register" element={<FinishRegisterPage />} />
+          <Route path="/auth/error" element={<ErrorPage />} />
+          <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/auth/confirm-informations" element={<ConfirmInformationsPage />} />
+          <Route path="/auth/sign-up-success" element={<SignUpSuccessPage />} />
+          <Route path="/auth/mobile/confirm" element={<MobileConfirmPage />} />
+          <Route path="/auth/mobile/success" element={<MobileSuccessPage />} />
 
-        {/* Dashboard routes */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="sales" element={<SalesPage />} />
-          <Route path="sales/:uuid/details" element={<SaleDetailsPage />} />
-          <Route path="calendar" element={<CalendarPage />} />
-          <Route path="properties" element={<PropertiesPage />} />
-          <Route path="properties/:uuid/detail" element={<PropertyDetailPage />} />
-          <Route path="properties/:uuid/update" element={<PropertyUpdatePage />} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="users/:uuid" element={<UserDetailPage />} />
-          <Route path="distribution" element={<DistributionPage />} />
-          <Route path="distribution/queue/:queueId" element={<QueueDetailPage />} />
-          <Route path="distribution/sale-action/:actionId" element={<SaleActionPage />} />
-          <Route path="access-control" element={<AccessControlPage />} />
-          <Route path="manage-rotary-leads" element={<ManageRotaryLeadsPage />} />
-          <Route path="manage-api" element={<ManageApiPage />} />
-          <Route path="payments" element={<PaymentsPage />} />
-          <Route path="manage-reports" element={<ManageReportsPage />} />
-          <Route path="manage-reports/files" element={<ManageReportsFilesPage />} />
-          <Route path="manage-properties" element={<ManagePropertiesPage />} />
-          <Route path="manage-condominiums" element={<ManageCondominiumsPage />} />
-          <Route path="manage-condominiums/condominium/:uuid" element={<CondominiumDetailPage />} />
-          <Route path="manage-leads" element={<ManageLeadsPage />} />
-          <Route path="notifications" element={<NotificationsPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="whatsapp/setup" element={<WhatsappSetupPage />} />
-        </Route>
+          {/* Dashboard routes */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="sales" element={<SalesPage />} />
+            <Route path="sales/:uuid/details" element={<SaleDetailsPage />} />
+            <Route path="calendar" element={<CalendarPage />} />
+            <Route path="properties" element={<PropertiesPage />} />
+            <Route path="properties/:uuid/detail" element={<PropertyDetailPage />} />
+            <Route path="properties/:uuid/update" element={<PropertyUpdatePage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="users/:uuid" element={<UserDetailPage />} />
+            <Route path="distribution" element={<DistributionPage />} />
+            <Route path="distribution/queue/:queueId" element={<QueueDetailPage />} />
+            <Route path="distribution/sale-action/:actionId" element={<SaleActionPage />} />
+            <Route path="access-control" element={<AccessControlPage />} />
+            <Route path="manage-rotary-leads" element={<ManageRotaryLeadsPage />} />
+            <Route path="manage-api" element={<ManageApiPage />} />
+            <Route path="payments" element={<PaymentsPage />} />
+            <Route path="manage-reports" element={<ManageReportsPage />} />
+            <Route path="manage-reports/files" element={<ManageReportsFilesPage />} />
+            <Route path="manage-properties" element={<ManagePropertiesPage />} />
+            <Route path="manage-condominiums" element={<ManageCondominiumsPage />} />
+            <Route path="manage-condominiums/condominium/:uuid" element={<CondominiumDetailPage />} />
+            <Route path="manage-leads" element={<ManageLeadsPage />} />
+            <Route path="notifications" element={<NotificationsPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="whatsapp/setup" element={<WhatsappSetupPage />} />
+          </Route>
 
-        {/* Sadm Dashboard routes */}
-        <Route path="/sadm-dashboard" element={<SadmDashboardLayout />}>
-          <Route index element={<SadmDashboardPage />} />
-          <Route path="clients" element={<SadmClientsPage />} />
-          <Route path="access-control" element={<SadmAccessControlPage />} />
-          <Route path="plans-control" element={<SadmPlansControlPage />} />
-          <Route path="manage-notifications" element={<SadmManageNotificationsPage />} />
-          <Route path="notification-reminders" element={<SadmNotificationRemindersPage />} />
-          <Route path="notifications" element={<SadmNotificationsPage />} />
-          <Route path="profile" element={<SadmProfilePage />} />
-        </Route>
+          {/* Sadm Dashboard routes */}
+          <Route path="/sadm-dashboard" element={<SadmDashboardLayout />}>
+            <Route index element={<SadmDashboardPage />} />
+            <Route path="clients" element={<SadmClientsPage />} />
+            <Route path="access-control" element={<SadmAccessControlPage />} />
+            <Route path="plans-control" element={<SadmPlansControlPage />} />
+            <Route path="manage-notifications" element={<SadmManageNotificationsPage />} />
+            <Route path="notification-reminders" element={<SadmNotificationRemindersPage />} />
+            <Route path="notifications" element={<SadmNotificationsPage />} />
+            <Route path="profile" element={<SadmProfilePage />} />
+          </Route>
 
-        {/* Public routes */}
-        <Route path="/public" element={<PublicLayout />}>
-          <Route path="check-in" element={<CheckInPage />} />
-          <Route path="remove-account" element={<RemoveAccountPage />} />
-        </Route>
+          {/* Public routes */}
+          <Route path="/public" element={<PublicLayout />}>
+            <Route path="check-in" element={<CheckInPage />} />
+            <Route path="remove-account" element={<RemoveAccountPage />} />
+          </Route>
 
-        {/* Payment */}
-        <Route path="/payment/confirm" element={<PaymentConfirmPage />} />
+          {/* Payment */}
+          <Route path="/payment/confirm" element={<PaymentConfirmPage />} />
 
-        {/* Other */}
-        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-        <Route path="/unauthorized" element={<UnauthorizedPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </NavigationGuard>
-    </SuspenseWrapper>
+          {/* Other */}
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </NavigationGuard>
+      </SuspenseWrapper>
+    </ErrorBoundary>
   );
 }

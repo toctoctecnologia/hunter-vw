@@ -48,11 +48,11 @@ export function resolveNavigationRedirect({ pathname, session, userInfo }: Resol
     return null;
   }
 
-  if (!userInfo) {
+  if (!userInfo || !userInfo.userInfo || !userInfo.signatureInfo) {
     return null;
   }
 
-  const isSuperAdmin = userInfo.userInfo?.isSuperAdmin ?? false;
+  const isSuperAdmin = userInfo.userInfo.isSuperAdmin ?? false;
 
   if (!userInfo.signUpCompleted && pathname !== '/' && !pathname.startsWith('/auth/finish-register')) {
     return '/auth/finish-register';

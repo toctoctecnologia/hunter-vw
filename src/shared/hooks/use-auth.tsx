@@ -16,6 +16,7 @@ const AuthContext = createContext<AuthContextProps | null>(null);
 
 function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<UserInformation | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function handleGetUserInformation() {
     try {
@@ -44,12 +45,10 @@ function AuthProvider({ children }: PropsWithChildren) {
   }
 
   useEffect(() => {
-    if (!user) {
-      handleGetUserInformation();
-    }
-  }, [user]);
+    handleGetUserInformation().finally(() => setIsLoading(false));
+  }, []);
 
-  if (!user) {
+  if (isLoading) {
     return <LoadingFull title="Carregando..." />;
   }
 

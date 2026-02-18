@@ -40,7 +40,10 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, authSession) => {
-      setSession(authSession);
+      setSession((prev) => {
+        if (prev?.access_token === authSession?.access_token) return prev;
+        return authSession;
+      });
       if (!authSession) {
         setUserInfo(null);
       }
