@@ -91,6 +91,32 @@ A release da Fase 1 só pode ser aprovada quando **todos** os critérios abaixo 
    - Ação: desativar `MIGRATION_VITE_PHASE1`; tráfego retorna ao app Next imediatamente.
    - Pós-rollback: abrir incidente, registrar causa raiz preliminar em até 2h e plano de correção em até 24h.
 
+### Checklist operacional pós-cutover (R0 → R+N)
+1. **Liberar canário para grupo interno**
+   - Iniciar com colaboradores internos (squad + suporte) antes de expor para clientes.
+   - Validar fluxos críticos: login, navegação entre módulos, criação/edição de registros e logout.
+
+2. **Monitorar sinais de saúde e negócio**
+   - Observar erros JavaScript no cliente (com foco em exceções não tratadas).
+   - Acompanhar falhas de autenticação (login, refresh de sessão e redirecionamentos incorretos).
+   - Medir latência p95/p99 de APIs críticas do dashboard.
+   - Comparar taxa de conversão dos fluxos principais vs baseline do Next.
+
+3. **Corrigir regressões e ampliar tráfego gradualmente**
+   - Corrigir regressões identificadas no canário antes de subir novo percentual.
+   - Evoluir rollout em etapas (exemplo: 5% → 15% → 25% → 50% → 100%).
+   - Exigir janela mínima de estabilidade entre etapas com monitoramento ativo.
+
+4. **Definir freeze de descontinuação do Next**
+   - Registrar data de freeze para novas alterações no app Next, mantendo apenas correções críticas.
+   - Definir critério formal para remover código legado (sem tráfego ativo + observabilidade estável).
+   - Planejar janela técnica para remoção de flags e artefatos temporários de compatibilidade.
+
+5. **Atualizar documentação final e runbooks de suporte**
+   - Consolidar decisão Go/No-Go, métricas do rollout e incidentes relevantes.
+   - Atualizar runbooks de suporte com novos fluxos de diagnóstico (auth, erros JS, integrações e rollback).
+   - Publicar comunicação de encerramento da fase e próximos passos de manutenção.
+
 ---
 
 ## 4) Matriz de riscos
