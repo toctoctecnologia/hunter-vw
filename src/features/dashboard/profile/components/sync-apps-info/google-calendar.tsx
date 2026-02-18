@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/shared/hooks/use-auth';
 
 import { hasFeature } from '@/shared/lib/permissions';
+import { integrationBackend } from '@/shared/lib/integration-backend';
 
 import { isGoogleServiceConnected } from '@/shared/lib/google-oauth';
 
@@ -32,7 +33,11 @@ export function GoogleCalendar() {
   }, []);
 
   const handleSyncGoogle = () => {
-    window.open('/api/google/oauth/start?scope=calendar', '_blank', 'width=600,height=700');
+    window.open(
+      integrationBackend.buildOAuthStartUrl('google', new URLSearchParams({ scope: 'calendar' })),
+      '_blank',
+      'width=600,height=700',
+    );
   };
 
   return (

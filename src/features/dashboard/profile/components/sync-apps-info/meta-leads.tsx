@@ -11,6 +11,7 @@ import { TypographyMuted } from '@/shared/components/ui/typography';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { hasFeature } from '@/shared/lib/permissions';
+import { integrationBackend } from '@/shared/lib/integration-backend';
 
 export function MetaLeads() {
   const { user } = useAuth();
@@ -18,7 +19,7 @@ export function MetaLeads() {
   const [metaConnected, setMetaConnected] = useState(false);
 
   const handleSyncMetaAds = () => {
-    window.open('/api/meta/oauth/start', '_blank', 'width=600,height=700');
+    window.open(integrationBackend.buildOAuthStartUrl('meta'), '_blank', 'width=600,height=700');
   };
 
   useEffect(() => {

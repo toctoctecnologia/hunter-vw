@@ -10,15 +10,11 @@ export interface AppError {
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS ?? 15000),
+  withCredentials: true,
 });
 
 let refreshPromise: Promise<string | null> | null = null;
-
-async function getAccessToken() {
-  const supabase = createClient();
-  const { data } = await supabase.auth.getSession();
-  return data.session?.access_token ?? null;
-}
 
 async function refreshAccessToken() {
   if (!refreshPromise) {
@@ -41,10 +37,20 @@ async function refreshAccessToken() {
 }
 
 api.interceptors.request.use(async (config) => {
-  const token = await getAccessToken();
+  const supabase = createClient();
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token ?? null;
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  if (data.session?.expires_at) {
+    config.headers['x-session-expires-at'] = String(data.session.expires_at);
+  }
+
+  config.headers['x-client-app'] = 'hunter-web';
+
   return config;
 });
 
