@@ -1,45 +1,36 @@
 
-# Correção de Dois Erros Críticos
+# Correção do Erro em app-sidebar.tsx
 
-## Problema 1: `Cannot read properties of undefined (reading 'showRoulettePopup')`
+## Causa Raiz
 
-**Causa raiz:** Em `use-lead-notification.tsx` linha 53, o acesso está escrito como:
+O operador `?.` (optional chaining) está sendo aplicado apenas no primeiro nível (`user?.signatureInfo`), mas **não** no segundo nível (`.lastExpirationDate`, `.status`). Quando `signatureInfo` é `undefined` — o que acontece durante o carregamento inicial do contexto de autenticação — o JavaScript tenta acessar propriedades em `undefined` e lança o `TypeError`.
+
+Há **3 ocorrências** do mesmo problema no arquivo:
+
 ```
-user?.userInfo.showRoulettePopup
+// Linha 48 - dentro do useEffect
+user?.signatureInfo.status          ← signatureInfo pode ser undefined
+
+// Linha 59 - array de dependências do useEffect  
+user?.signatureInfo.lastExpirationDate   ← CRASH aqui
+user?.signatureInfo.status
+
+// Linha 110 - no JSX
+user?.signatureInfo.status
 ```
-O operador `?.` protege apenas o acesso a `user`, mas se `userInfo` vier `undefined` (por exemplo, durante carregamento assíncrono ou resposta parcial da API), o JavaScript ainda tenta acessar `.showRoulettePopup` em `undefined` e lança o erro.
 
-**Correção:** Adicionar `?.` também antes de `showRoulettePopup`:
-```
-user?.userInfo?.showRoulettePopup
-```
+## Sobre o Favicon 404
 
----
-
-## Problema 2: `Module not found: Can't resolve 'tw-animate-css'`
-
-**Causa raiz:** O arquivo `src/app/globals.css` contém:
-```css
-@import 'tw-animate-css';
-```
-Porém `tw-animate-css` está listado em `devDependencies` no `package.json`. Com o pipeline Tailwind CSS v4 + Vite (plugin nativo `@tailwindcss/vite`), essa dependência precisa estar disponível em tempo de build de produção. Mover para `dependencies` resolve o problema.
-
----
+O erro `favicon.ico: 404` é separado e ocorre porque não há arquivo `favicon.ico` na pasta `public/`. É um erro inofensivo mas pode ser corrigido simplesmente colocando um arquivo de ícone válido em `public/favicon.ico`, ou removendo a linha `<link rel="icon" ...>` do `index.html`. Não afeta o funcionamento da aplicação.
 
 ## Arquivos a Modificar
 
-**1. `src/features/dashboard/hooks/use-lead-notification.tsx`** — linha 53:
-- De: `enabled: !!user?.userInfo.showRoulettePopup,`
-- Para: `enabled: !!user?.userInfo?.showRoulettePopup,`
+### `src/shared/components/layout/app-sidebar.tsx`
 
-**2. `package.json`** — mover `tw-animate-css` de `devDependencies` para `dependencies`:
-- Remover `"tw-animate-css": "^1.3.8"` de `devDependencies`
-- Adicionar `"tw-animate-css": "^1.3.8"` em `dependencies`
+Adicionar `?.` em todos os acessos a `signatureInfo`:
 
----
+- **Linha 48:** `user?.signatureInfo.status` → `user?.signatureInfo?.status`
+- **Linha 59 (dependências):** `user?.signatureInfo.lastExpirationDate` → `user?.signatureInfo?.lastExpirationDate` e `user?.signatureInfo.status` → `user?.signatureInfo?.status`
+- **Linha 110 (JSX):** `user?.signatureInfo.status` → `user?.signatureInfo?.status`
 
-## Technical Details
-
-- The optional chaining fix (`?.`) is a one-character change but prevents a runtime crash whenever `userInfo` is transiently undefined during auth context initialization.
-- Moving `tw-animate-css` to production dependencies ensures the package is available when Vite bundles the CSS in build mode, since `@tailwindcss/vite` processes CSS imports at build time.
-- No logic changes, no UI changes — purely defensive fixes.
+Este é exatamente o mesmo padrão defensivo já aplicado em `use-lead-notification.tsx` na correção anterior.
