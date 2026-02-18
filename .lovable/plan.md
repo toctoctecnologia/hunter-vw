@@ -1,34 +1,49 @@
 
-# Correção Definitiva do app-sidebar.tsx
 
-## Por que o erro persiste?
+# Corrigir Erros de Build que Impedem o Preview
 
-O diff anterior corrigiu a condição do `if` (linha 48) e o array de dependências (linha 59), mas **deixou dois acessos diretos** sem optional chaining:
+O preview nao carrega porque o build falha com 3 erros de TypeScript em `src/shared/lib/api.ts` e a ausencia do diretorio `supabase/functions`.
 
-- **Linha 49** — dentro do `useEffect`, após o `if`:
-  ```ts
-  const expirationDate = new Date(user.signatureInfo.lastExpirationDate);
-  //                               ^^^^ sem optional chaining aqui
-  ```
+## Correcoes
 
-- **Linha 117** — no JSX, dentro do bloco que já verifica `signatureInfo?.status`:
-  ```tsx
-  {` ${getHumanExpirationDate(user.signatureInfo.lastExpirationDate)}`}
-  //                           ^^^^ sem optional chaining aqui
-  ```
+### 1. `src/shared/lib/api.ts`
 
-Mesmo que a condição `user?.signatureInfo?.status === 'TEST_PERIOD_ACTIVE'` seja verdadeira no momento do render, um re-render assíncrono pode tornar `signatureInfo` undefined antes de a linha 49 ou 117 executar, causando o crash.
+**Linha 67 (TS2322):** O spread de headers nao e compativel com o tipo `AxiosRequestHeaders`. Solucao: usar `requestConfig.headers.set()` ou fazer cast com `as any`:
 
-## Correções
+```ts
+// De (linha 67-71):
+requestConfig.headers = {
+  ...requestConfig.headers,
+  Authorization: `Bearer ${refreshedToken}`,
+  'x-retry-with-refresh': '1',
+};
 
-### `src/shared/components/layout/app-sidebar.tsx`
+// Para:
+requestConfig.headers.set('Authorization', `Bearer ${refreshedToken}`);
+requestConfig.headers.set('x-retry-with-refresh', '1');
+```
 
-**Linha 49** — Dentro do `useEffect`:
-- De: `const expirationDate = new Date(user.signatureInfo.lastExpirationDate);`
-- Para: `const expirationDate = new Date(user?.signatureInfo?.lastExpirationDate ?? '');`
+**Linhas 87-88 (TS18047):** `data` pode ser `null`, mas e acessado diretamente. Solucao: usar optional chaining:
 
-**Linha 117** — No JSX:
-- De: `{' ' + getHumanExpirationDate(user.signatureInfo.lastExpirationDate)}`
-- Para: `{' ' + getHumanExpirationDate(user?.signatureInfo?.lastExpirationDate ?? '')}`
+```ts
+// De:
+if (data.details) {
+  messages.push(`Detalhes: ${data.details}`);
+}
 
-Essas duas são as únicas ocorrências restantes de acesso direto sem proteção. Após essa correção, todos os acessos a `signatureInfo` no arquivo estarão protegidos com optional chaining.
+// Para:
+if (data?.details) {
+  messages.push(`Detalhes: ${data.details}`);
+}
+```
+
+### 2. Criar diretorio `supabase/functions`
+
+Criar um arquivo placeholder para que o diretorio exista:
+- `supabase/functions/.keep` (arquivo vazio)
+
+Isso resolve o aviso de build sobre a ausencia do diretorio.
+
+## Resultado Esperado
+
+Apos essas correcoes, o build devera completar sem erros e o preview voltara a funcionar normalmente. Nenhuma alteracao visual ou de componente sera feita.
