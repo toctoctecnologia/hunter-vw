@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>HUNTER V2</title>
+    <meta name="description" content="CRM Mobile para Imobiliárias">
+    <meta name="author" content="Toc Toc" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/yIlG50m26ATXNRtp6fxGjgy9V1p2/social-images/social-1758413520778-1.png">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@toc_toc_crm" />
+    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/yIlG50m26ATXNRtp6fxGjgy9V1p2/social-images/social-1758413520778-1.png">
+
+    <meta name="theme-color" content="#FF6600" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Toc Toc CRM" />
+    <script>
+      (function () {
+        try {
+          const root = document.documentElement;
+          const storedPreference = window.localStorage.getItem('themePreference');
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const mode =
+            storedPreference === 'escuro'
+              ? 'dark'
+              : storedPreference === 'sistema'
+                ? prefersDark
+                  ? 'dark'
+                  : 'light'
+                : 'light';
+
+          root.setAttribute('data-theme', mode);
+          root.classList.toggle('dark', mode === 'dark');
+          root.classList.toggle('theme-dark', mode === 'dark');
+          root.classList.toggle('theme-light', mode === 'light');
+        } catch (error) {
+          console.warn('Unable to apply stored theme preference', error);
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.add('theme-light');
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/png" href="/toc-toc-logo.svg">
+  <meta property="og:title" content="HUNTER V2">
+  <meta name="twitter:title" content="HUNTER V2">
+  <meta property="og:description" content="CRM Mobile para Imobiliárias">
+  <meta name="twitter:description" content="CRM Mobile para Imobiliárias">
+</head>
+
+  <body class="min-h-screen bg-background text-foreground">
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        try {
+          const script = document.createElement("script")
+          script.type = "module"
+          script.async = true
+          script.src = "https://cdn.gpteng.co/gptengineer.js"
+          script.onerror = (err) => {
+            console.error("Failed to load gptengineer script", err)
+          }
+          document.body.appendChild(script)
+        } catch (err) {
+          console.error("Error initializing gptengineer script", err)
+        }
+      })
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

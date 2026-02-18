@@ -1,0 +1,1 @@
+export const getLeadDetailPath = (id: string | number) => `/lead-vendas/${id}`;

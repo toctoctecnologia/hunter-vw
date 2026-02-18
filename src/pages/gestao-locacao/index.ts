@@ -1,0 +1,16 @@
+export { default as GestaoLocacaoDashboard } from './GestaoLocacaoDashboard';
+export { default as ContratosPage } from './ContratosPage';
+export { default as FaturasPage } from './FaturasPage';
+export { default as RepassesPage } from './RepassesPage';
+export { default as RepasseDetalhesPage } from './RepasseDetalhesPage';
+export { default as AnalisesPage } from './AnalisesPage';
+export { default as ReguaCobrancaPage } from './ReguaCobrancaPage';
+export { default as ReajustesPage } from './ReajustesPage';
+export { default as DimobPage } from './DimobPage';
+export { default as NovoContratoPage } from './NovoContratoPage';
+export { default as PadroesContratoPage } from './PadroesContratoPage';
+export { default as SegurosPage } from './SegurosPage';
+export { default as EditarPadraoContratoPage } from './EditarPadraoContratoPage';
+export { default as ContratoDetalhesPage } from './ContratoDetalhesPage';
+export { default as FaturaDetalhesPage } from './FaturaDetalhesPage';
+export { default as NovaFaturaPage } from './NovaFaturaPage';
