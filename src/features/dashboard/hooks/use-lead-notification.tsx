@@ -50,7 +50,7 @@ export function useLeadNotification() {
 
   const { isConnected, subscribe, send } = useStompWebSocket({
     url: import.meta.env.VITE_WS_URL!,
-    enabled: !!user?.userInfo.showRoulettePopup,
+    enabled: !!user?.userInfo?.showRoulettePopup,
     onConnected: () => {
       toast.success('Conectado ao sistema de notificações em tempo real');
     },
