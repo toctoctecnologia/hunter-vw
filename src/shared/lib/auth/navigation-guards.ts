@@ -72,7 +72,7 @@ export function resolveNavigationRedirect({ pathname, session, userInfo }: Resol
 
   if (
     !isSuperAdmin &&
-    !AUTHENTICATED_ACCOUNT_ALLOWED_STATUSES.includes(userInfo.signatureInfo.status) &&
+    !AUTHENTICATED_ACCOUNT_ALLOWED_STATUSES.includes(userInfo.signatureInfo?.status ?? '') &&
     !pathname.startsWith('/payment/confirm')
   ) {
     return '/payment/confirm';
