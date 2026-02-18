@@ -20,7 +20,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    const pathname = typeof window !== 'undefined' ? window.location.pathname : 'unknown';
+    console.error('ErrorBoundary caught an error', {
+      route: pathname,
+      message: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+      digest: (error as Error & { digest?: string }).digest,
+    });
   }
 
   handleReload = () => {
