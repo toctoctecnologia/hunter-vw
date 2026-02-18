@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import { LoadingFull } from '@/shared/components/loading-full';
+import { NavigationGuard } from '@/shared/components/navigation-guard';
 import { DashboardLayout } from '@/shared/components/layout/dashboard-layout';
 import { SadmDashboardLayout } from '@/shared/components/layout/sadm-dashboard-layout';
 import { PublicLayout } from '@/shared/components/layout/public-layout';
@@ -74,7 +75,8 @@ function SuspenseWrapper({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <SuspenseWrapper>
-      <Routes>
+      <NavigationGuard>
+        <Routes>
         {/* Auth routes */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
@@ -141,7 +143,8 @@ export default function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+        </Routes>
+      </NavigationGuard>
     </SuspenseWrapper>
   );
 }
