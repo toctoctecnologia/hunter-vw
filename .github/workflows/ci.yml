@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  lint-build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint gate
+        run: npm run lint
+
+      - name: Build gate
+        run: npm run build
+
+      - name: Start preview
+        run: npm run preview:ci &
+
+      - name: Wait for preview
+        run: |
+          for i in {1..30}; do
+            if curl -sf http://127.0.0.1:4173 >/dev/null; then
+              echo "Preview pronto"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Preview não subiu a tempo" >&2
+          exit 1
+
+      - name: Smoke gate
+        run: npm run smoke:preview
