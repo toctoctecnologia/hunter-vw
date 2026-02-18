@@ -16,6 +16,7 @@ interface NavigationGuardProps {
 export function NavigationGuard({ children }: NavigationGuardProps) {
   const { pathname } = useLocation();
   const [isLoading, setIsLoading] = useState(true);
+  const [isUserInfoLoading, setIsUserInfoLoading] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [userInfo, setUserInfo] = useState<UserInformation | null>(null);
 
@@ -57,9 +58,12 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
 
     async function loadUserInfo() {
       if (!session) {
+        setIsUserInfoLoading(false);
         setUserInfo(null);
         return;
       }
+
+      setIsUserInfoLoading(true);
 
       try {
         const response = await api.get<UserInformation>('account/user/information');
@@ -74,6 +78,10 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
         }
 
         console.error('Error loading user information for route guard:', error);
+      } finally {
+        if (isMounted) {
+          setIsUserInfoLoading(false);
+        }
       }
     }
 
@@ -94,7 +102,7 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
     [pathname, session, userInfo],
   );
 
-  if (isLoading) {
+  if (isLoading || (session && isUserInfoLoading)) {
     return <LoadingFull title="Carregando..." />;
   }
 
