@@ -1,9 +1,0 @@
-export { default as GestaoVendasDashboard } from './GestaoVendasDashboard';
-export { default as ContratosVendaPage } from './ContratosVendaPage';
-export { default as ContratoVendaDetalhesPage } from './ContratoVendaDetalhesPage';
-export { default as RecebimentosPage } from './RecebimentosPage';
-export { default as ComissoesPage } from './ComissoesPage';
-export { default as TransferenciasPage } from './TransferenciasPage';
-export { default as DocumentosPage } from './DocumentosPage';
-export { default as AgendaVendaPage } from './AgendaVendaPage';
-export { default as DadosVendasPage } from './DadosVendasPage';

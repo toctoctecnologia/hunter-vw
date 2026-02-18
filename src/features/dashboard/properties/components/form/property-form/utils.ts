@@ -1,0 +1,88 @@
+import type { PropertyDetail } from '@/shared/types';
+import { PropertyType, PropertyNoteType } from '@/shared/types';
+
+import { PropertyFormData } from './schema';
+
+export function propertyToFormData(property: PropertyDetail): PropertyFormData {
+  return {
+    uuid: property.uuid,
+    name: property.name,
+    description: property.description || '',
+    price: property.price ? String(property.price * 100) : '',
+    previousPrice: property.previousPrice ? String(property.previousPrice * 100) : '',
+    iptuValue: property.iptuValue ? String(property.iptuValue * 100) : '',
+    commission: property.commission ? String(property.commission) : '',
+    status: property.status,
+    location: {
+      street: property.location?.street,
+      number: property.location?.number,
+      city: property.location?.city,
+      floor: property.location?.floor || '',
+      state: property.location?.state,
+      zipCode: property.location?.zipCode || '',
+      district: property.location?.district || '',
+    },
+    dimension: {
+      internalArea: property.dimension?.internalArea ? String(property.dimension?.internalArea) : '',
+      externalArea: property.dimension?.externalArea ? String(property.dimension?.externalArea) : '',
+      lotArea: property.dimension?.lotArea ? String(property.dimension?.lotArea) : '',
+    },
+    feature: {
+      area: property.featureSummary?.area ? String(property.featureSummary?.area) : '',
+      rooms: property.featureSummary?.rooms ? String(property.featureSummary?.rooms) : '',
+      suites: property.featureSummary?.suites ? String(property.featureSummary?.suites) : '',
+      bathrooms: property.featureSummary?.bathrooms ? String(property.featureSummary?.bathrooms) : '',
+      garageSpots: property.featureSummary?.garageSpots ? String(property.featureSummary?.garageSpots) : '',
+      keyLocation: property.featureSummary?.keyLocation,
+      furnishedStatus: property.featureSummary?.furnishedStatus || null,
+      livingRooms: property.featureSummary?.livingRooms ? String(property.featureSummary?.livingRooms) : '',
+      balconies: property.featureSummary?.balconies ? String(property.featureSummary?.balconies) : '',
+      floorFinish: property.featureSummary?.floorFinish || '',
+      propertyPosition: property.featureSummary?.propertyPosition || '',
+    },
+    payment: {
+      paymentMethods: property.payment?.paymentMethods || '',
+      directWithOwner: property.payment?.directWithOwner,
+      acceptsFinancing: property.payment?.acceptsFinancing,
+    },
+    info: {
+      isHighlighted: property.info?.isHighlighted ?? false,
+      isAvailable: property.info?.isAvailable ?? false,
+      isAvailableForRent: property.info?.isAvailableForRent ?? false,
+      access: property.info?.access || '',
+      propertyType: property.info?.propertyType as PropertyType,
+      situation: property.info?.situation,
+      destination: property.info?.destination,
+      secondaryType: property.info?.secondaryType,
+      purpose: property.info?.purpose,
+      keysAmount: property.info.keysAmount ? String(property.info.keysAmount) : '',
+      garageType: property.info.garageType,
+      garageLocation: property.info.garageLocation || '',
+      adTitle: property.info.adTitle || '',
+      adDescription: property.info.adDescription || '',
+      metaDescription: property.info.metaDescription || '',
+      readinessStatus: property.info.readinessStatus,
+      ownerName: property.ownerName || '',
+      ownerPhone: property.ownerPhone || '',
+      elevatorsCount: property.info.elevatorsCount ? String(property.info.elevatorsCount) : '',
+      towersCount: property.info.towersCount ? String(property.info.towersCount) : '',
+      floorsCount: property.info.floorsCount ? String(property.info.floorsCount) : '',
+      unitsPerFloor: property.info.unitsPerFloor ? String(property.info.unitsPerFloor) : '',
+      totalUnits: property.info.totalUnits ? String(property.info.totalUnits) : '',
+      signAuthorized: property.info.signAuthorized ?? false,
+      signStatus: property.info.signStatus,
+      signDetails: property.info.signDetails || '',
+    },
+    secondaryDistrictUuid: property.location?.secondaryDistrict?.uuid || '',
+    condominiumUuid: property.featureSummary?.condominium?.uuid || '',
+    featureUuids: property.featureSummary.features.map((f) => f.uuid),
+    catcherUuids: property.catchers?.map((c) => c.uuid) || [],
+    statusJustification: property.statusJustification || '',
+    notes:
+      property.notes?.map((n, index) => ({
+        id: `existing-note-${index}`,
+        noteType: n.noteType as PropertyNoteType,
+        description: n.description,
+      })) || [],
+  };
+}

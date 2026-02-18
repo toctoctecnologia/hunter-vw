@@ -1,0 +1,121 @@
+import z from 'zod';
+
+import {
+  FurnishedStatus,
+  PropertyConstructionStatus,
+  PropertyDestination,
+  PropertyGarageType,
+  PropertyLaunchType,
+  PropertyNoteType,
+  PropertyPositionType,
+  PropertyPurpose,
+  PropertyReadinessStatus,
+  PropertySecondaryType,
+  PropertySignStatus,
+  PropertySituation,
+  PropertyStatus,
+  PropertyType,
+} from '@/shared/types';
+
+const propertySchema = z.object({
+  uuid: z.string().optional(),
+  name: z.string().optional(),
+  description: z.string().optional(),
+  price: z.string().min(1, 'Preço do imóvel é obrigatório'),
+  previousPrice: z.string().optional(),
+  status: z.nativeEnum(PropertyStatus),
+  statusJustification: z.string().optional(),
+  iptuValue: z.string().min(1, 'Valor do IPTU deve ser maior ou igual a 0'),
+  commission: z.string().min(1, 'Comissão deve ser maior ou igual a 0'),
+  keyIdentifier: z.string().optional(),
+  acceptsPermuta: z.boolean().optional(),
+  displayedOnPortal: z.boolean().optional(),
+  internetPublication: z.boolean().optional(),
+  location: z.object({
+    street: z.string().min(1, 'Rua é obrigatória'),
+    number: z.string().min(1, 'Número é obrigatório'),
+    city: z.string().min(1, 'Cidade é obrigatória'),
+    floor: z.string().optional(),
+    state: z
+      .string({ message: 'Estado é obrigatório' })
+      .min(2, 'Estado é obrigatório')
+      .max(2, 'Estado deve ter 2 caracteres'),
+    unit: z.string().optional(),
+    zipCode: z.string().min(1, 'CEP é obrigatório'),
+    district: z.string().min(1, 'Bairro é obrigatório'),
+    region: z.string().optional(),
+    subRegion: z.string().optional(),
+    usageZone: z.string().optional(),
+  }),
+  dimension: z.object({
+    internalArea: z.string().optional(),
+    externalArea: z.string().optional(),
+    lotArea: z.string().optional(),
+  }),
+  feature: z.object({
+    area: z.string().optional(),
+    rooms: z.string().optional(),
+    suites: z.string().optional(),
+    bathrooms: z.string().optional(),
+    garageSpots: z.string().optional(),
+    keyLocation: z.string().optional(),
+    furnishedStatus: z.nativeEnum(FurnishedStatus).nullish(),
+    livingRooms: z.string().optional(),
+    balconies: z.string().optional(),
+    floorFinish: z.string().optional(),
+    propertyPosition: z.string().optional(),
+  }),
+  payment: z.object({
+    paymentMethods: z.string(),
+    directWithOwner: z.boolean().optional(),
+    acceptsFinancing: z.boolean().optional(),
+  }),
+  info: z.object({
+    isHighlighted: z.boolean().optional().default(false),
+    isAvailable: z.boolean().optional().default(false),
+    isAvailableForRent: z.boolean().optional().default(false),
+    access: z.string().optional(),
+    propertyType: z.nativeEnum(PropertyType, { error: 'Tipo de imóvel é obrigatório' }),
+    situation: z.nativeEnum(PropertySituation, { error: 'Situação do imóvel é obrigatória' }),
+    destination: z.nativeEnum(PropertyDestination, { error: 'Destino do imóvel é obrigatório' }),
+    secondaryType: z.union([z.nativeEnum(PropertySecondaryType), z.literal('')]),
+    purpose: z.nativeEnum(PropertyPurpose, { error: 'Finalidade do imóvel é obrigatória' }),
+    keysAmount: z.string().optional(),
+    garageType: z.nativeEnum(PropertyGarageType).optional(),
+    garageLocation: z.string().optional(),
+    adTitle: z.string().optional(),
+    adDescription: z.string().optional(),
+    metaDescription: z.string().optional(),
+    readinessStatus: z.nativeEnum(PropertyReadinessStatus).optional(),
+    ownerName: z.string().min(1, 'Nome do proprietário é obrigatório'),
+    ownerPhone: z.string().min(1, 'Telefone do proprietário é obrigatório'),
+    elevatorsCount: z.string().optional(),
+    towersCount: z.string().optional(),
+    floorsCount: z.string().optional(),
+    unitsPerFloor: z.string().optional(),
+    totalUnits: z.string().optional(),
+    constructionStatus: z.nativeEnum(PropertyConstructionStatus).optional(),
+    launchType: z.nativeEnum(PropertyLaunchType).optional(),
+    propertyPositionType: z.nativeEnum(PropertyPositionType).optional(),
+    signAuthorized: z.boolean().optional().default(false),
+    signStatus: z.union([z.nativeEnum(PropertySignStatus), z.literal('')]),
+    signDetails: z.string().optional(),
+  }),
+  secondaryDistrictUuid: z.string().nullish(),
+  condominiumUuid: z.string().nullish(),
+  featureUuids: z
+    .array(z.string(), { message: 'Características do imóvel são obrigatórias' })
+    .min(1, 'Selecione ao menos uma característica'),
+  catcherUuids: z.array(z.string()).optional(),
+  notes: z.array(
+    z.object({
+      id: z.string().optional(),
+      noteType: z.nativeEnum(PropertyNoteType),
+      description: z.string(),
+    }),
+  ),
+});
+
+type PropertyFormData = z.input<typeof propertySchema>;
+
+export { propertySchema, type PropertyFormData };
