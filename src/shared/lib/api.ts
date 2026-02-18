@@ -64,11 +64,8 @@ api.interceptors.response.use(
       const refreshedToken = await refreshAccessToken();
 
       if (refreshedToken) {
-        requestConfig.headers = {
-          ...requestConfig.headers,
-          Authorization: `Bearer ${refreshedToken}`,
-          'x-retry-with-refresh': '1',
-        };
+        requestConfig.headers.set('Authorization', `Bearer ${refreshedToken}`);
+        requestConfig.headers.set('x-retry-with-refresh', '1');
 
         return api(requestConfig);
       }
@@ -84,7 +81,7 @@ api.interceptors.response.use(
     const message = data?.messagePtBr || data?.message || 'Ocorreu um erro inesperado.';
     const messages = [`${message} - Codigo: ${data?.code || 'N/A'}`, `${path} | Status: ${error.response?.status}`];
 
-    if (data.details) {
+    if (data?.details) {
       messages.push(`Detalhes: ${data.details}`);
     }
 
