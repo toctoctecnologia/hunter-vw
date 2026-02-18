@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { ArrowRight } from 'lucide-react';
 
 import { withPermission } from '@/shared/hoc/with-permission';

@@ -7,6 +7,7 @@ Garantir que cada componente migrado para Vite continue funcional, acessível e 
 - Aplique este checklist em toda PR de migração.
 - Marque cada item com `✅`, `⚠️` ou `❌`.
 - Registre evidências (print, teste automatizado, gravação curta ou log).
+- Comece pelos módulos **sem dependência de `next/server`, `next/headers` ou handlers `route.ts`**.
 
 ## Checklist padrão por componente
 
@@ -37,9 +38,25 @@ Garantir que cada componente migrado para Vite continue funcional, acessível e 
 ## Onda 1 (módulos client-first sem dependência server)
 
 ### Status
-- ✅ Imports `next/navigation` substituídos por wrapper local baseado em React Router (`@/shims/next-navigation`) em módulos client selecionados.
+- ✅ Imports `next/navigation` substituídos por alternativa baseada em React Router (`@/shims/next-navigation`) nos módulos client priorizados.
 - ✅ Imports `next/image` substituídos por wrapper local (`@/shims/next-image`) em componentes de UI client-side.
 - ✅ Imports `next/link` substituídos por `Link` de `react-router-dom` em componentes migrados.
+
+### Checklist de compatibilidade por componente (modelo de preenchimento)
+
+| Componente | Renderização | Eventos/Navegação | Acessibilidade | Estilos/Assets (`public/`) | Evidência |
+|---|---|---|---|---|---|
+| `src/app/(public)/public/check-in/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + revisão manual em `npm run dev` |
+| `src/app/(protected)/google-ads/success/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + validação de querystring (`tokens`) |
+| `src/app/(protected)/calendar/success/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + validação de querystring (`tokens`) |
+| `src/app/(protected)/meta/success/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + callback/popup manual |
+| `src/app/(auth)/auth/forgot-password/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + navegação via formulário |
+| `src/app/(auth)/auth/reset-password/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + fluxo de senha manual |
+| `src/app/(auth)/auth/mobile/confirm/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + leitura de parâmetros |
+| `src/app/(protected)/dashboard/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + entrada por URL direta |
+| `src/app/(protected)/dashboard/properties/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + filtros/query params |
+| `src/app/(protected)/dashboard/sales/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + filtros/query params |
+| `src/app/(protected)/dashboard/manage-reports/page.tsx` | ✅ | ✅ | ✅ | ✅ | `npm run build` + navegação de abas |
 
 ### Componentes incluídos nesta onda
 - `src/shared/hoc/with-permission.tsx`

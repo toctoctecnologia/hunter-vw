@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from '@/shims/next-navigation';
 import { useMutation } from '@tanstack/react-query';
 import { CheckCircle, XCircle, Loader2, QrCode } from 'lucide-react';
 import { useEffect, useRef } from 'react';

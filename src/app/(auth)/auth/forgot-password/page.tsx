@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { useState } from 'react';
 import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
 import { z } from 'zod';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams } from '@/shims/next-navigation';
 import { PaginationState } from '@tanstack/react-table';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';

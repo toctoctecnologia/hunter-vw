@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams } from '@/shims/next-navigation';
 import { useQuery } from '@tanstack/react-query';
 
 import { getPropertyById } from '@/features/dashboard/properties/api/properties';

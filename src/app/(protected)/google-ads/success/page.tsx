@@ -2,7 +2,7 @@
 
 import { CheckCircle2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from '@/shims/next-navigation';
 
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { saveGoogleTokens, GoogleOAuthTokens } from '@/shared/lib/google-oauth';
