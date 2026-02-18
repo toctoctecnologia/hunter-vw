@@ -46,7 +46,7 @@ export function AppSidebar({ logoHref, navItems, ...props }: AppSidebarProps) {
 
   useEffect(() => {
     if (user?.signatureInfo?.status === 'TEST_PERIOD_ACTIVE') {
-      const expirationDate = new Date(user.signatureInfo.lastExpirationDate);
+      const expirationDate = new Date(user?.signatureInfo?.lastExpirationDate ?? '');
       const now = new Date();
 
       if (expirationDate < now) {
@@ -114,7 +114,7 @@ export function AppSidebar({ logoHref, navItems, ...props }: AppSidebarProps) {
                 <CardTitle className="text-sm">Período de 7 dias ativo</CardTitle>
                 <CardDescription>
                   Seu período de teste gratuito está ativo, ele irá expirar em
-                  {` ${getHumanExpirationDate(user.signatureInfo.lastExpirationDate)}`}
+                  {` ${getHumanExpirationDate(user?.signatureInfo?.lastExpirationDate ?? '')}`}
                 </CardDescription>
               </CardHeader>
               <CardContent className="px-4">
