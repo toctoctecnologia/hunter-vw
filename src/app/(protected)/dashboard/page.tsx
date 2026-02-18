@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Calendar, ChartLine, House } from 'lucide-react';
 import { format, subDays } from 'date-fns';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from '@/shims/next-navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 

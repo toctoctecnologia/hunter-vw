@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from '@/shims/next-navigation';
 import { CheckCircle2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 

@@ -2,7 +2,7 @@
 
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from '@/shims/next-navigation';
 
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';

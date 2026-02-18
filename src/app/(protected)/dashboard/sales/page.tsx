@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from '@/shims/next-navigation';
 import { EllipsisVertical, ImportIcon, Plus } from 'lucide-react';
 
 import { useAuth } from '@/shared/hooks/use-auth';

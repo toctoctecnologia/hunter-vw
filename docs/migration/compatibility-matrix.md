@@ -75,9 +75,30 @@ Este inventário cobre:
 ## Atualização da onda inicial (módulos sem dependência de runtime Next)
 
 - Foram priorizados componentes client-side fora de handlers server (`route.ts`) e fora de APIs de `next/server`/`next/headers`.
-- Em módulos de interface, imports diretos de `next/navigation` e `next/image` foram trocados para wrappers locais (`@/shims/next-navigation` e `@/shims/next-image`) para reduzir o acoplamento ao namespace `next/*`.
+- Em módulos de interface client-first, imports diretos de `next/navigation` e `next/image` foram trocados para alternativas baseadas em React Router/browser APIs (`@/shims/next-navigation` e `@/shims/next-image`) para reduzir o acoplamento ao namespace `next/*`.
 - Casos com `next/link` foram convertidos para `Link` de `react-router-dom`.
-- A validação de estilos e assets estáticos foi formalizada no checklist `docs/migration/component-compatibility-checklist.md`, incluindo critérios para recursos em `public/` no contexto do Vite.
+- A validação de estilos e assets estáticos foi formalizada no checklist `docs/migration/component-compatibility-checklist.md`, incluindo critérios e evidências para recursos em `public/` no contexto do Vite.
+
+### Módulos priorizados nesta rodada
+
+- `src/app/(public)/public/check-in/page.tsx`
+- `src/app/(protected)/google-ads/success/page.tsx`
+- `src/app/(protected)/calendar/success/page.tsx`
+- `src/app/(protected)/meta/success/page.tsx`
+- `src/app/(auth)/auth/forgot-password/page.tsx`
+- `src/app/(auth)/auth/reset-password/page.tsx`
+- `src/app/(auth)/auth/mobile/confirm/page.tsx`
+- `src/app/(protected)/dashboard/page.tsx`
+- `src/app/(protected)/dashboard/manage-reports/page.tsx`
+- `src/app/(protected)/dashboard/properties/page.tsx`
+- `src/app/(protected)/dashboard/sales/page.tsx`
+- `src/app/(protected)/dashboard/manage-condominiums/condominium/[uuid]/page.tsx`
+- `src/app/(protected)/dashboard/properties/[uuid]/detail/page.tsx`
+- `src/app/(protected)/dashboard/properties/[uuid]/update/page.tsx`
+- `src/app/(protected)/dashboard/users/[uuid]/page.tsx`
+- `src/app/(protected)/dashboard/distribution/sale-action/[actionId]/page.tsx`
+- `src/app/(protected)/dashboard/sales/[uuid]/details/page.tsx`
+- `src/app/(protected)/dashboard/distribution/queue/[queueId]/page.tsx`
 
 ## Notas práticas para a migração
 

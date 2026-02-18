@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams } from '@/shims/next-navigation';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { CheckCircle2, XCircle, TrendingUp, Users, Send, Package } from 'lucide-react';
