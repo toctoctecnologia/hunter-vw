@@ -4,7 +4,10 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import { componentTagger } from 'lovable-tagger';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode }) => {
+  const isProduction = mode === 'production';
+
+  return {
   plugins: [
     react(),
     tailwindcss(),
@@ -26,6 +29,14 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: 'dist',
-    sourcemap: mode === 'development',
+    assetsDir: 'assets',
+    sourcemap: isProduction ? false : true,
+    manifest: true,
   },
-}));
+  preview: {
+    host: true,
+    port: Number(process.env.PORT) || 4173,
+    strictPort: true,
+  },
+  };
+});
