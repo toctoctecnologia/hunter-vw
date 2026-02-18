@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 import { api } from '@/shared/lib/api';
+import { PUBLIC_ROUTE_PREFIXES } from '@/shared/lib/auth/navigation-guards';
 
 function handleError(error: any, request: NextRequest) {
   const url = request.nextUrl.clone();
@@ -32,24 +33,8 @@ export async function updateSession(request: NextRequest) {
   const user = claimsData?.claims;
   const { pathname } = request.nextUrl;
 
-  const publicRoutes = [
-    '/auth/register',
-    '/auth/forgot-password',
-    '/auth/error',
-    '/auth/finish-register',
-    '/auth/reset-password',
-    '/auth/confirm',
-    '/auth/confirm-informations',
-    '/auth/mobile/success',
-    '/auth/mobile/confirm',
-    '/auth/mobile/confirm/process',
-    '/auth/sign-up-success',
-    '/public',
-    '/privacy-policy',
-    '/terms-of-service',
-  ];
 
-  if (!user && !publicRoutes.some((route) => pathname.startsWith(route)) && pathname !== '/') {
+  if (!user && !PUBLIC_ROUTE_PREFIXES.some((route) => pathname.startsWith(route)) && pathname !== '/') {
     const url = request.nextUrl.clone();
     url.pathname = '/';
     return NextResponse.redirect(url);
