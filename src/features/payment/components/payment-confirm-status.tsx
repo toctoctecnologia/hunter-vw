@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CheckCircle, Clock, AlertTriangle, XCircle } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 import { SignatureInfoStatus } from '@/shared/types';
 
@@ -176,7 +176,7 @@ export function PaymentConfirmStatus({ lastExpirationDate, status, userName }: P
 
           {hasAccessToDashboard && (
             <div className="mb-4">
-              <Link href="/dashboard">
+              <Link to="/dashboard">
                 <Button className="w-full sm:w-auto">Acessar Dashboard</Button>
               </Link>
             </div>

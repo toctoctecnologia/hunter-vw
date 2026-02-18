@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { useQuery } from '@tanstack/react-query';
 import { User2 } from 'lucide-react';
 

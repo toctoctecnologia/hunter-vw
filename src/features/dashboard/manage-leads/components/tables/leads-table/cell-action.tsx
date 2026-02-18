@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { ExternalLink } from 'lucide-react';
 
 import { LeadDetail } from '@/shared/types';

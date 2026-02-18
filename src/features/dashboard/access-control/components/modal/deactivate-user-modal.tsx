@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { Archive, CalendarIcon, Check, RefreshCcw, Thermometer } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 
 import { LeadIntensityType, ModalProps } from '@/shared/types';
 import { cn, getIntensityColor, getIntensityText } from '@/shared/lib/utils';

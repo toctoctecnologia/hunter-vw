@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { Clock, User, Phone, Calendar, Eye, Settings } from 'lucide-react';
 import { Cell, Pie, PieChart } from 'recharts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';

@@ -2,7 +2,7 @@ import { Building2, Search, X, Calendar, Check } from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import Image from 'next/image';
+import Image from '@/shims/next-image';
 import { format } from 'date-fns';
 
 import { getTimeOneHourAhead, timeToString, stringToTime } from '@/shared/lib/utils';

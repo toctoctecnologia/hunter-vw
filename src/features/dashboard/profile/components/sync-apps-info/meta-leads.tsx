@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import Image from '@/shims/next-image';
 
 import { useAuth } from '@/shared/hooks/use-auth';
 

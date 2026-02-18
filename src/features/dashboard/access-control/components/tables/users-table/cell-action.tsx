@@ -3,7 +3,7 @@ import React from 'react';
 import { MoreHorizontal } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 
 import { Button } from '@/shared/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';

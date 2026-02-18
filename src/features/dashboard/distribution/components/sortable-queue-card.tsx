@@ -2,7 +2,7 @@
 
 import { GripVertical, Edit, Trash2, Users, TrendingUp } from 'lucide-react';
 import { useSortable } from '@dnd-kit/sortable';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { CSS } from '@dnd-kit/utilities';
 
 import { hasFeature } from '@/shared/lib/permissions';

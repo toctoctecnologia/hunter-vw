@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/shims/next-navigation';
 import { ArrowLeft } from 'lucide-react';
 
 import { Button } from '@/shared/components/ui/button';

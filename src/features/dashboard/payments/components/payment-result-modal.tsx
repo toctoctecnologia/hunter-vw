@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CheckCircle, Copy, ExternalLink, QrCode, Barcode, Calendar, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import Image from '@/shims/next-image';
 import { toast } from 'sonner';
 
 import { ModalProps, NewSubscriptionPlanChangeItem, PaymentBillingType } from '@/shared/types';

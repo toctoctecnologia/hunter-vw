@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
-import Image from 'next/image';
+import Image from '@/shims/next-image';
 
 import { cn } from '@/shared/lib/utils';
 

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 import { EMAIL_CONTACT } from '@/shared/constants';
 
@@ -21,7 +21,7 @@ export function Header({ progressValue }: HeaderProps) {
     <header className="space-y-4 text-center md:text-left">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="flex flex-col items-center gap-4 md:items-start">
-          <Link href="/">
+          <Link to="/">
             <Logo width={120} />
           </Link>
 
