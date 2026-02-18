@@ -11,7 +11,7 @@ import { Button } from '@/shared/components/ui/button';
 
 async function performCheckin(queueUuid: string, eventType: string, token: string) {
   await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/distribution/checkin`,
+    `${import.meta.env.VITE_API_URL}/distribution/checkin`,
     { queueId: queueUuid, eventType },
     { headers: { Authorization: `Bearer ${token}` } },
   );

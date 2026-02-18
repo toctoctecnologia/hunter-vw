@@ -1,6 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { Home, ShieldX } from 'lucide-react';
 
 import { EMAIL_CONTACT } from '@/shared/constants';
@@ -10,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader } from '@/shared/compone
 import { Button } from '@/shared/components/ui/button';
 
 export default function Page() {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -39,11 +37,11 @@ export default function Page() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" className="w-full sm:w-auto" onClick={() => router.push('/')}>
+              <Button size="lg" className="w-full sm:w-auto" onClick={() => navigate('/')}>
                 <Home className="w-4 h-4" />
                 Voltar para o início
               </Button>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto" onClick={() => router.back()}>
+              <Button variant="outline" size="lg" className="w-full sm:w-auto" onClick={() => navigate(-1 as any)}>
                 Voltar à página anterior
               </Button>
             </div>

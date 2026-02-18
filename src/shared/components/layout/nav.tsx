@@ -1,7 +1,5 @@
-'use client';
-
 import { useCallback, useMemo } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/shared/hooks/use-auth';
 
@@ -20,8 +18,8 @@ import {
 } from '@/shared/components/ui/sidebar';
 
 export function Nav({ items }: { items: NavItem[] }) {
-  const navigation = useRouter();
-  const path = usePathname();
+  const navigate = useNavigate();
+  const { pathname: path } = useLocation();
   const { user } = useAuth();
 
   const { setOpenMobile } = useSidebar();
@@ -46,7 +44,7 @@ export function Nav({ items }: { items: NavItem[] }) {
           isActive={isActive}
           className={cn(isActive && 'bg-primary/15! hover:bg-primary/20!')}
           onClick={() => {
-            navigation.push(url);
+            navigate(url);
             setOpenMobile(false);
           }}
         >
@@ -55,7 +53,7 @@ export function Nav({ items }: { items: NavItem[] }) {
         </SidebarMenuButton>
       );
     },
-    [navigation, setOpenMobile],
+    [navigate, setOpenMobile],
   );
 
   return (

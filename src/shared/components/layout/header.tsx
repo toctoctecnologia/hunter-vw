@@ -1,5 +1,4 @@
-'use client';
-import { usePathname, useRouter } from 'next/navigation';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Bell, Search } from 'lucide-react';
 
 import { getPageTitleByPath, getPageDescriptionByPath, getUserNameInitials } from '@/shared/lib/utils';
@@ -19,7 +18,8 @@ interface HeaderProps {
 }
 
 export function Header({ bellHref, profileHref }: HeaderProps) {
-  const router = useRouter();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { user } = useAuth();
   const { open: isSearchOpen, setOpen: setSearchOpen } = useGlobalSearch();
 
@@ -32,8 +32,8 @@ export function Header({ bellHref, profileHref }: HeaderProps) {
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
           <div>
-            <h1 className="text-base font-medium">{getPageTitleByPath(usePathname())}</h1>
-            <TypographyMuted className="hidden md:block">{getPageDescriptionByPath(usePathname())}</TypographyMuted>
+            <h1 className="text-base font-medium">{getPageTitleByPath(pathname)}</h1>
+            <TypographyMuted className="hidden md:block">{getPageDescriptionByPath(pathname)}</TypographyMuted>
           </div>
 
           <div className="ml-auto flex items-center gap-2">
@@ -49,16 +49,16 @@ export function Header({ bellHref, profileHref }: HeaderProps) {
 
             <ModeToggle />
 
-            <Button variant="ghost" size="icon" onClick={() => router.push(bellHref)}>
+            <Button variant="ghost" size="icon" onClick={() => navigate(bellHref)}>
               <Bell />
             </Button>
 
             {user?.userInfo.profilePictureUrl ? (
-              <Avatar className="size-9" onClick={() => router.push(profileHref)}>
+              <Avatar className="size-9" onClick={() => navigate(profileHref)}>
                 <AvatarImage src={user?.userInfo.profilePictureUrl} alt={user?.userInfo.name} />
               </Avatar>
             ) : (
-              <Button size="icon" className="rounded-full" onClick={() => router.push(profileHref)}>
+              <Button size="icon" className="rounded-full" onClick={() => navigate(profileHref)}>
                 {getUserNameInitials(user?.userInfo.name || '-')}
               </Button>
             )}

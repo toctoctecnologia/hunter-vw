@@ -107,7 +107,7 @@ export default function WhatsAppSetupPage() {
     // Inicializar o SDK do Facebook
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '',
+        appId: import.meta.env.VITE_FACEBOOK_APP_ID || '',
         autoLogAppEvents: true,
         xfbml: true,
         version: 'v24.0',
@@ -123,7 +123,7 @@ export default function WhatsAppSetupPage() {
   }, []);
 
   const launchWhatsAppSignup = () => {
-    const configId = process.env.NEXT_PUBLIC_WHATSAPP_CONFIG_ID;
+    const configId = import.meta.env.VITE_WHATSAPP_CONFIG_ID;
 
     if (!configId) {
       setError('WhatsApp Config ID não configurado');
