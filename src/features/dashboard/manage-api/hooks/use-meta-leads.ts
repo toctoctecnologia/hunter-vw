@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMetaConnection, isMetaTokenExpired } from '@/shared/lib/meta-oauth';
+import { integrationBackend } from '@/shared/lib/integration-backend';
+import { queryKeys } from '@/shared/constants/query-keys';
 
 type MetaLeadsMetrics = {
   leads: number;
@@ -29,7 +31,7 @@ export function useMetaLeads() {
   const connection = getMetaConnection();
 
   return useQuery<MetaLeadsResponse>({
-    queryKey: ['meta-leads-metrics'],
+    queryKey: queryKeys.integrations.metaLeadsMetrics,
     queryFn: async () => {
       const metaConnection = getMetaConnection();
 
@@ -43,26 +45,11 @@ export function useMetaLeads() {
 
       const { tokens, accountData } = metaConnection;
 
-      // Faz a chamada para a API
-      const params = new URLSearchParams({
-        access_token: tokens.access_token,
-        ad_account_id: accountData.ad_account_id || '',
-      });
-
-      const response = await fetch(`/api/meta/leads?${params.toString()}`);
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao buscar métricas do Meta Leads');
-      }
-
-      return response.json();
+      return integrationBackend.getMetaLeadsMetrics(tokens.access_token, accountData.ad_account_id || '');
     },
-    // Revalida a cada 5 minutos
-    staleTime: 5 * 60 * 1000,
-    // Mantém os dados em cache por 10 minutos
+    staleTime: 2 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    // Não refetch automaticamente (usuário pode forçar refresh)
+    retry: 1,
     refetchOnWindowFocus: false,
     // Requer que esteja conectado para fazer a query
     enabled: !!connection && !!connection.accountData.ad_account_id,

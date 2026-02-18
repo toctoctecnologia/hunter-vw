@@ -8,6 +8,7 @@ import { TypographyMuted } from '@/shared/components/ui/typography';
 import { Card, CardContent } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { hasFeature } from '@/shared/lib/permissions';
+import { integrationBackend } from '@/shared/lib/integration-backend';
 
 function GoogleAdsIcon({ className }: { className?: string }) {
   return (
@@ -34,7 +35,11 @@ export function GoogleAdsLeads() {
   const [googleAdsConnected, setGoogleAdsConnected] = useState(false);
 
   const handleSyncGoogleAds = () => {
-    window.open('/api/google/oauth/start?scope=ads', '_blank', 'width=600,height=700');
+    window.open(
+      integrationBackend.buildOAuthStartUrl('google', new URLSearchParams({ scope: 'ads' })),
+      '_blank',
+      'width=600,height=700',
+    );
   };
 
   useEffect(() => {

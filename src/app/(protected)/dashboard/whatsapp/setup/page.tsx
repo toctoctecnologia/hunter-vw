@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { integrationBackend } from '@/shared/lib/integration-backend';
 
 declare global {
   interface Window {
@@ -154,7 +155,7 @@ export default function WhatsAppSetupPage() {
           ...(signupData && { signup_data: signupData }),
         });
 
-        window.location.href = `/api/whatsapp/oauth/callback?${params.toString()}`;
+        window.location.href = integrationBackend.buildOAuthCallbackUrl('whatsapp', params);
       } else {
         console.warn('⚠️ Nenhum código de autorização recebido');
         setError('Autenticação cancelada ou falhou');

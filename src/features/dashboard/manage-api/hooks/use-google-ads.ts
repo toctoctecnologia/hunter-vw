@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getGoogleTokens, isTokenExpired } from '@/shared/lib/google-oauth';
+import { integrationBackend } from '@/shared/lib/integration-backend';
+import { queryKeys } from '@/shared/constants/query-keys';
 
 type GoogleAdsMetrics = {
   leads: number;
@@ -26,7 +28,7 @@ type GoogleAdsResponse = {
  */
 export function useGoogleAds() {
   return useQuery<GoogleAdsResponse>({
-    queryKey: ['google-ads-metrics'],
+    queryKey: queryKeys.integrations.googleAdsMetrics,
     queryFn: async () => {
       const tokens = getGoogleTokens('ads');
 
@@ -38,21 +40,11 @@ export function useGoogleAds() {
         throw new Error('Token do Google Ads expirado. Reconecte sua conta.');
       }
 
-      // Faz a chamada para a API (encode do access_token para evitar problemas com caracteres especiais)
-      const response = await fetch(`/api/google/ads?access_token=${encodeURIComponent(tokens.access_token)}`);
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao buscar métricas do Google Ads');
-      }
-
-      return response.json();
+      return integrationBackend.getGoogleAdsMetrics(tokens.access_token);
     },
-    // Revalida a cada 5 minutos
-    staleTime: 5 * 60 * 1000,
-    // Mantém os dados em cache por 10 minutos
+    staleTime: 2 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    // Não refetch automaticamente (usuário pode forçar refresh)
+    retry: 1,
     refetchOnWindowFocus: false,
     // Requer que esteja conectado para fazer a query
     enabled: !!getGoogleTokens('ads'),
