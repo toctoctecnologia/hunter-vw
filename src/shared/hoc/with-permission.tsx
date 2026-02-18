@@ -1,27 +1,25 @@
 'use client';
 import React, { ComponentType } from 'react';
-import { useRouter } from '@/shims/next-navigation';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { hasFeature } from '@/shared/lib/permissions';
 import { useAuth } from '@/shared/hooks/use-auth';
 
 export function withPermission<T extends object>(WrappedComponent: ComponentType<T>, requiredFeatureCodes: string[]) {
   const HOC = (props: T) => {
-    const router = useRouter();
+    const { pathname } = useLocation();
     const { user } = useAuth();
 
-    const userPermissions = user?.userInfo.profile.permissions || [];
+    const userPermissions = user?.userInfo?.profile?.permissions ?? [];
 
-    if (!userPermissions.length) {
-      router.push('/unauthorized');
-      return null;
+    if (!userPermissions.length || !requiredFeatureCodes.length) {
+      return <Navigate to="/unauthorized" replace state={{ from: pathname }} />;
     }
 
     const hasAccess = user && requiredFeatureCodes.some((code) => hasFeature(userPermissions, code));
 
     if (!hasAccess) {
-      router.push('/unauthorized');
-      return null;
+      return <Navigate to="/unauthorized" replace state={{ from: pathname }} />;
     }
 
     return <WrappedComponent {...props} />;
