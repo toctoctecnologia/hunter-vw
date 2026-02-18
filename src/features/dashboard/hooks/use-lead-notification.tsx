@@ -1,4 +1,4 @@
-'use client';
+
 
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
@@ -49,7 +49,7 @@ export function useLeadNotification() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { isConnected, subscribe, send } = useStompWebSocket({
-    url: process.env.NEXT_PUBLIC_WS_URL!,
+    url: import.meta.env.VITE_WS_URL!,
     enabled: !!user?.userInfo.showRoulettePopup,
     onConnected: () => {
       toast.success('Conectado ao sistema de notificações em tempo real');

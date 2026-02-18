@@ -1,4 +1,4 @@
-'use client';
+
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 
 import { UserInformation } from '@/shared/types';

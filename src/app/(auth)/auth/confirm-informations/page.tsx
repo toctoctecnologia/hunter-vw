@@ -1,7 +1,5 @@
-'use client';
-
 import { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CheckCircle2, Clock, Mail, Phone, Shield, User } from 'lucide-react';
 
@@ -29,8 +27,8 @@ interface InviteInformation {
 }
 
 function ConfirmInformationsContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const inviteId = searchParams.get('inviteId');
 
   const [inviteInfo, setInviteInfo] = useState<InviteInformation | null>(null);
@@ -51,7 +49,7 @@ function ConfirmInformationsContent() {
     };
 
     fetchInviteInfo();
-  }, [inviteId, router]);
+  }, [inviteId]);
 
   const handleAcceptInvite = async () => {
     if (!inviteId) return;
@@ -84,7 +82,7 @@ function ConfirmInformationsContent() {
           <CardDescription>{error || 'Não foi possível carregar as informações do convite'}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button onClick={() => router.push('/')} className="w-full">
+          <Button onClick={() => navigate('/')} className="w-full">
             Voltar para login
           </Button>
         </CardContent>
@@ -104,7 +102,7 @@ function ConfirmInformationsContent() {
             onClick={async () => {
               const supabase = (await import('@/shared/lib/supabase/client')).createClient();
               await supabase.auth.signOut();
-              router.push('/');
+              navigate('/');
             }}
             className="w-full"
           >
@@ -168,11 +166,11 @@ function ConfirmInformationsContent() {
         </div>
 
         <div className="flex gap-3 pt-4">
-          <Button variant="outline" onClick={() => router.push('/')} disabled={isAccepting} className="flex-1">
+          <Button variant="outline" onClick={() => navigate('/')} disabled={isAccepting} className="flex-1">
             Cancelar
           </Button>
-          <Button onClick={handleAcceptInvite} isLoading={isAccepting} disabled={isAccepting} className="flex-1">
-            Confirmar e acessar
+          <Button onClick={handleAcceptInvite} disabled={isAccepting} className="flex-1">
+            {isAccepting ? 'Processando...' : 'Confirmar e acessar'}
           </Button>
         </div>
       </CardContent>

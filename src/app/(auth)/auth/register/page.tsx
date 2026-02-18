@@ -1,17 +1,15 @@
+import { useSearchParams } from 'react-router-dom';
+
 import { cn } from '@/shared/lib/utils';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { RegisterForm } from '@/features/dashboard/auth/components/form/register-form';
 import { Logo } from '@/shared/components/layout/logo';
 
-interface PageProps {
-  searchParams: Promise<{ inviteId?: string; email?: string }>;
-}
-
-export default async function Page({ searchParams }: PageProps) {
-  const params = await searchParams;
-  const inviteId = params.inviteId;
-  const email = params.email;
+export default function Page() {
+  const [searchParams] = useSearchParams();
+  const inviteId = searchParams.get('inviteId') || undefined;
+  const email = searchParams.get('email') || undefined;
 
   return (
     <div className="flex min-h-screen flex-col bg-primary-foreground dark:bg-zinc-900 lg:grid lg:grid-cols-[minmax(0,520px)_1fr]">

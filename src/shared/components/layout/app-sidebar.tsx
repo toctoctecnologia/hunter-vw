@@ -1,7 +1,5 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { HelpCircle, MessageCircle } from 'lucide-react';
 
 import { useAuth } from '@/shared/hooks/use-auth';
@@ -75,7 +73,7 @@ export function AppSidebar({ logoHref, navItems, ...props }: AppSidebarProps) {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
-                <Link href={logoHref}>
+                <Link to={logoHref}>
                   <Logo width={110} />
                 </Link>
               </SidebarMenuButton>
