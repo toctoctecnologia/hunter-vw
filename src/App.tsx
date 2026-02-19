@@ -65,6 +65,7 @@ const RemoveAccountPage = lazy(() => import('@/app/(public)/public/remove-accoun
 const PrivacyPolicyPage = lazy(() => import('@/app/privacy-policy/page'));
 const UnauthorizedPage = lazy(() => import('@/app/unauthorized/page'));
 const NotFoundPage = lazy(() => import('@/app/not-found'));
+const StatusPage = lazy(() => import('@/app/status/page'));
 
 // Payment & OAuth
 const PaymentConfirmPage = lazy(() => import('@/app/(protected)/payment/confirm/page'));
@@ -140,6 +141,9 @@ export default function App() {
 
           {/* Payment */}
           <Route path="/payment/confirm" element={<PaymentConfirmPage />} />
+
+          {/* Health routes */}
+          <Route path="/status" element={<StatusPage />} />
 
           {/* Other */}
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

@@ -43,6 +43,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <p className="text-muted-foreground">
               Ocorreu um erro inesperado. Tente recarregar a página.
             </p>
+            {import.meta.env.DEV && this.state.error && (
+              <pre className="max-h-56 overflow-auto rounded-md border bg-muted p-3 text-left text-xs">
+                {this.state.error.stack || this.state.error.message}
+              </pre>
+            )}
             <button
               onClick={this.handleReload}
               className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
