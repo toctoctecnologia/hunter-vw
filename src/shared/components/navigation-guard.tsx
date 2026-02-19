@@ -20,12 +20,16 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
   const [session, setSession] = useState<Session | null>(null);
   const [userInfo, setUserInfo] = useState<UserInformation | null>(null);
 
+  const bypassRoutes = ['/status'];
+  const shouldBypassGuard = bypassRoutes.includes(pathname);
+
   useEffect(() => {
     const supabase = createClient();
 
     let isMounted = true;
 
     async function loadSession() {
+      const startedAt = performance.now();
       const { data } = await supabase.auth.getSession();
       if (!isMounted) {
         return;
@@ -33,6 +37,13 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
 
       setSession(data.session);
       setIsLoading(false);
+
+      if (import.meta.env.DEV) {
+        console.info('[NavigationGuard] getSession completed', {
+          durationMs: Math.round(performance.now() - startedAt),
+          hasSession: Boolean(data.session),
+        });
+      }
     }
 
     loadSession();
@@ -60,6 +71,11 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
     let isMounted = true;
 
     async function loadUserInfo() {
+      if (shouldBypassGuard) {
+        setIsUserInfoLoading(false);
+        return;
+      }
+
       if (!session) {
         setIsUserInfoLoading(false);
         setUserInfo(null);
@@ -93,7 +109,7 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
     return () => {
       isMounted = false;
     };
-  }, [session]);
+  }, [session, shouldBypassGuard]);
 
   const redirectTo = useMemo(
     () =>
@@ -104,6 +120,10 @@ export function NavigationGuard({ children }: NavigationGuardProps) {
       }),
     [pathname, session, userInfo],
   );
+
+  if (shouldBypassGuard) {
+    return <>{children}</>;
+  }
 
   if (isLoading || (session && isUserInfoLoading)) {
     return <LoadingFull title="Carregando..." />;
