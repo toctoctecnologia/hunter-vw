@@ -27,6 +27,15 @@ Este plano consolida diagnóstico técnico e tarefas práticas para garantir que
   - variáveis de ambiente obrigatórias ausentes;
   - falha silenciosa em etapa anterior do pipeline.
 
+### 5) Lovable "project out of date"
+- Quando o editor mostra o aviso **"Update Project"** e o preview à direita diz **"Preview has not been built yet"**, geralmente o problema não é o código em si.
+- Nesse estado, o container/projeto remoto ainda não foi sincronizado com a última versão do repositório.
+- Resultado: o preview antigo não encontra os artefatos esperados e exibe mensagem de build ausente.
+- Mitigação imediata:
+  1) clicar em **Update project** no Lovable;
+  2) aguardar a sincronização;
+  3) disparar novo build/preview.
+
 ---
 
 ## Tarefas priorizadas para colocar tudo funcionando
