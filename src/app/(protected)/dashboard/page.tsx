@@ -267,7 +267,7 @@ function Page() {
           </>
         )}
 
-        {hasFeature(user?.userInfo.profile.permissions, '1001') && (
+        {hasFeature(user?.userInfo?.profile?.permissions, '1001') && (
           <>
             <div className="grid md:grid-cols-2 gap-4">
               {isLoadingQualification ? <Loading /> : <ContactTimeQualification qualifications={qualificationData} />}
