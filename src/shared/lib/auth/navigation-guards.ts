@@ -8,6 +8,7 @@ export const PUBLIC_ROUTE_PREFIXES = [
   '/auth/error',
   '/auth/reset-password',
   '/auth/confirm',
+  '/auth/callback',
   '/auth/confirm-informations',
   '/auth/mobile/success',
   '/auth/mobile/confirm',

@@ -18,6 +18,7 @@ const ResetPasswordPage = lazy(() => import('@/app/(auth)/auth/reset-password/pa
 const ConfirmInformationsPage = lazy(() => import('@/app/(auth)/auth/confirm-informations/page'));
 const SignUpSuccessPage = lazy(() => import('@/app/(auth)/auth/sign-up-success/page'));
 const MobileConfirmPage = lazy(() => import('@/app/(auth)/auth/mobile/confirm/page'));
+const AuthConfirmPage = lazy(() => import('@/app/(auth)/auth/confirm/page'));
 const MobileSuccessPage = lazy(() => import('@/app/(auth)/auth/mobile/success/page'));
 
 // Dashboard pages
@@ -88,6 +89,8 @@ export default function App() {
           <Route path="/auth/error" element={<ErrorPage />} />
           <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
           <Route path="/auth/confirm-informations" element={<ConfirmInformationsPage />} />
+          <Route path="/auth/confirm" element={<AuthConfirmPage />} />
+          <Route path="/auth/callback" element={<AuthConfirmPage />} />
           <Route path="/auth/sign-up-success" element={<SignUpSuccessPage />} />
           <Route path="/auth/mobile/confirm" element={<MobileConfirmPage />} />
           <Route path="/auth/mobile/success" element={<MobileSuccessPage />} />
