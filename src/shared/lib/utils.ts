@@ -104,7 +104,9 @@ export function clamp(value: number, min: number, max: number) {
 }
 
 export function getURL(path = 'auth/confirm') {
-  let url = import.meta.env.VITE_SITE_URL ?? 'http://localhost:8080/';
+  let url =
+    import.meta.env.VITE_SITE_URL ??
+    (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8080');
   url = url.startsWith('http') ? url : `https://${url}`;
   url = url.endsWith('/') ? url : `${url}/`;
   return `${url}${path}`;

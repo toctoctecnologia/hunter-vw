@@ -4622,6 +4622,7 @@ export type Database = {
         Row: {
           account_id: number
           color: string
+          completed_at: string | null
           created_at: string | null
           description: string | null
           id: number
@@ -4639,6 +4640,7 @@ export type Database = {
         Insert: {
           account_id: number
           color: string
+          completed_at?: string | null
           created_at?: string | null
           description?: string | null
           id?: number
@@ -4656,6 +4658,7 @@ export type Database = {
         Update: {
           account_id?: number
           color?: string
+          completed_at?: string | null
           created_at?: string | null
           description?: string | null
           id?: number
